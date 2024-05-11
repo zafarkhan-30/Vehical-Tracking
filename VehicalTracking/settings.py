@@ -97,6 +97,20 @@ DATABASES = {
     },
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'mssql',
+#         'NAME': 'VehicleTracking',
+#         'USER': 'sa',
+#         'PASSWORD': 'vtpl@123',
+#         'HOST': '103.248.60.42',
+#         'PORT': '1433',
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 17 for SQL Server',
+#         },
+#     },
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

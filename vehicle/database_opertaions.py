@@ -1,9 +1,10 @@
 from database.models import *
 
-def create_device_object(device_details):
-        if not devices.objects.filter(device_id = device_details["id"]).exists():
+def create_device_object(device_detail):
+        if not devices.objects.filter(device_id = device_detail["id"]).exists():
+            device_details = device_detail.get("deviceDetails", {})
             devices.objects.create(
-                device_id=device_details["id"],
+                device_id=device_detail["id"],
                 name=device_details.get("name"),
                 registrationNumber=device_details.get("registrationNumber"),
                 deviceType=device_details.get("deviceType"),
@@ -11,26 +12,28 @@ def create_device_object(device_details):
                 trackingCode=device_details.get("trackingCode")
             )
 
-def create_device_status(device_id , device_status_data):
+def create_device_status(device_id , device_status_data , transactionId ):
     device_instance = devices.objects.get(device_id=device_id)
     active = device_status_data.get("active")
     status = device_status_data.get("status")
 
     return deviceStatus(
         device = device_instance ,
+        transactionId = transactionId ,
         active = active ,
         status = status
     )
 
 
 
-def create_device_location(device_id, location_data):
-
+def create_device_location(device_id, location_data , transactionId):
+    
     device_instance = devices.objects.get(device_id=device_id)
     location_details = location_data.get("location", {})
     
     return deviceLocation(
         device=device_instance,
+        transactionId = transactionId ,
         gpsTime=location_details.get("gpsTime"),
         gprsTime=location_details.get("gprsTime"),
         latitude=location_details.get("latitude"),
@@ -45,12 +48,13 @@ def create_device_location(device_id, location_data):
 
 
 
-def create_canInfo_object(device_id , can_info_data ):
+def create_canInfo_object(device_id , can_info_data , transactionId):
     device_instance = devices.objects.get(device_id=device_id)
     canInfo_details = can_info_data.get("canInfo", {})
    
     return canInfo(
         device=device_instance,
+        transactionId = transactionId ,
         vehicleBattery=can_info_data.get("vehicleBattery"),
         AMinCellVolt=canInfo_details.get("AMinCellVolt"),
         stateOfCharge=canInfo_details.get("stateOfCharge"),
@@ -71,12 +75,13 @@ def create_canInfo_object(device_id , can_info_data ):
         distanceToEmpty=canInfo_details.get("distanceToEmpty")
     )
      
-def create_alerts_object(device_id , alerts_data):
+def create_alerts_object(device_id , alerts_data , transactionId):
     device_instance = devices.objects.get(device_id=device_id)
     alerts_details = alerts_data.get("alerts", {})
 
     return alerts(
          device = device_instance ,
+         transactionId = transactionId ,
          timestamp =alerts_details.get('timestamp'),
          latitude= alerts_details.get('latitude'),
          longitude=alerts_details.get('longitude'),
@@ -87,12 +92,13 @@ def create_alerts_object(device_id , alerts_data):
 
     )
 
-def create_todaysDrive_object(device_id, todayDrive_data):
+def create_todaysDrive_object(device_id, todayDrive_data , transactionId):
     device_instance = devices.objects.get(device_id=device_id)
     todayDrive_details = todayDrive_data.get("todaysDrive", {})
 
     return todaysDrive(
          device = device_instance , 
+         transactionId = transactionId ,
          todayKms =todayDrive_details.get("todayKms"),
          todayMovementTime =todayDrive_details.get("todayMovementTime"),
          todayIdleTime  =todayDrive_details.get("todayIdleTime"),
@@ -101,23 +107,25 @@ def create_todaysDrive_object(device_id, todayDrive_data):
 
 
 
-def create_links_object(device_id , links_data):
+def create_links_object(device_id , links_data , transactionId):
     device_instance = devices.objects.get(device_id=device_id)
     links_details = links_data.get("links", {})
 
     return links(
          device = device_instance ,
+         transactionId = transactionId ,
          embedUrl = links_details.get("embedUrl")
 
     )
      
 
-def create_dinputs_objects(device_id , dinputs_data):
+def create_dinputs_objects(device_id , dinputs_data , transactionId):
     device_instance = devices.objects.get(device_id=device_id)
     dinputs_details = dinputs_data.get("dinputs" , {})
 
     return dinputs(
          device = device_instance , 
+         transactionId = transactionId ,
         input_1 = dinputs_details.get("1"),
         input_2= dinputs_details.get("2"),
         input_3 =dinputs_details.get("3"),

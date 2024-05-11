@@ -6,7 +6,7 @@ from django.db import models
 
 class devices(models.Model):
     device_id = models.IntegerField()
-    name = models.CharField(max_length=100 )
+    name = models.CharField(max_length=100 , blank = True , null =True )
     registrationNumber  = models.CharField(max_length= 255, blank=True  , null =  True )
     deviceType = models.CharField(max_length = 255, blank=True , null = True    )
     chassisNumber = models.CharField(max_length = 255, blank=True , null    = True )
@@ -16,12 +16,14 @@ class devices(models.Model):
 
 class deviceStatus(models.Model):
     device = models.ForeignKey(devices , related_name="deviceStatus" , on_delete=models.CASCADE) 
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     active = models.BooleanField(default=False)
     status = models.CharField(max_length= 100 , blank=True , null = True )
     created_at = models.DateTimeField(auto_now_add=True)
 
 class deviceLocation(models.Model):
-    device = models.ForeignKey(devices , related_name="deviceLocation" , on_delete=models.SET_NULL , null = True )
+    device = models.ForeignKey(devices , related_name="deviceLocation" , on_delete=models.CASCADE , null = True )
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     gpsTime = models.BigIntegerField( )
     gprsTime = models.BigIntegerField()
     latitude = models.BigIntegerField()
@@ -35,11 +37,11 @@ class deviceLocation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class canInfo( models.Model):
-    device = models.ForeignKey(devices , related_name = "canInfo_devices" , on_delete = models.SET_NULL , null = True)
+    device = models.ForeignKey(devices , related_name = "canInfo_devices" , on_delete = models.CASCADE , null = True)
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     vehicleBattery = models.BigIntegerField(null = True)
     stateOfCharge = models.IntegerField(null = True  )
     AMinCellVolt = models.BigIntegerField( null = True )
-    stateOfCharge = models.BigIntegerField( null = True )
     APackVoltageValue= models.BigIntegerField( null = True )
     APackCurrentValue= models.BigIntegerField( null = True )
     batteryTemperature= models.BigIntegerField( null = True )
@@ -58,7 +60,8 @@ class canInfo( models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 class alerts(models.Model):
-    device = models.ForeignKey(devices , related_name="device_alerts" , on_delete = models.SET_NULL , null = True)
+    device = models.ForeignKey(devices , related_name= "device_alerts" , on_delete = models.CASCADE , null = True)
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     timestamp = models.BigIntegerField(null = True)
     latitude= models.BigIntegerField(null = True)
     longitude= models.BigIntegerField(null = True)
@@ -71,6 +74,7 @@ class alerts(models.Model):
 
 class todaysDrive(models.Model):
     device = models.ForeignKey(devices , related_name = "device_todaysDrive" , on_delete = models.CASCADE)
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     todayKms = models.IntegerField(null = True)
     todayMovementTime =  models.IntegerField(null = True)
     todayIdleTime =  models.IntegerField(null = True)
@@ -79,11 +83,13 @@ class todaysDrive(models.Model):
 
 class links(models.Model):
     device = models.ForeignKey(devices , related_name = "device_links" , on_delete = models.CASCADE)
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     embedUrl = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add = True )
 
 class dinputs(models.Model):
     device = models.ForeignKey(devices , related_name = "device_dinputs" , on_delete = models.CASCADE , null = True) 
+    transactionId = models.CharField(max_length=100 , null = False , blank = False)
     input_1 = models.IntegerField(null = True)
     input_2 = models.IntegerField(null = True)
     input_3 = models.IntegerField(null = True)
