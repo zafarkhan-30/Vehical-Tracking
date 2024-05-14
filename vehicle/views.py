@@ -11,10 +11,11 @@ from .serializers import *
 import uuid
 from rest_framework import status
 from rest_framework import filters
+from rest_framework.views import APIView
 # Create your views here.
 
 
-class DeviceDetailsView(generics.GenericAPIView):
+class DeviceDetailsView(APIView):
 
     def get(self, request):
         refresh_token = refresh_access_token()
@@ -77,7 +78,7 @@ class DeviceDetailsView(generics.GenericAPIView):
         
 
 
-class ViewDeviceDetails(generics.ListAPIView):
+class ViewDeviceDetails(generics.GenericAPIView):
     """
     This function is used to filter the queryset based on the 'name' query parameter.
     If 'name' is provided, it filters the devices with names containing the 'name'.
