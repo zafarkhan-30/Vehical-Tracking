@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0(!s^e+q2$2!wx4hcx-nid#&hmy=vz#zkom3u9)&r3n%pni9s3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'database',
     'vehicle',
     'drf_yasg',
+     'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -95,6 +96,10 @@ DATABASES = {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # DATABASES = {

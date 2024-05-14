@@ -24,7 +24,8 @@ class CanInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = canInfo
         # fields = ["vehicleBattery" , "stateOfCharge" , "AMinCellVolt" , "AMinCellVolt" "APackVoltageValue" ,] 
-        exclude = ["id" , "transactionId" , "created_at" , "device"]
+        exclude = ["id" , "transactionId" , "created_at" , "device" , "AMinCellVolt" ,
+                   "BMaxCellVolt" , "AMaxCellVolt" , "BMinCellVolt"]
 
 class AlertsSerializer(serializers.ModelSerializer):
     class Meta:
