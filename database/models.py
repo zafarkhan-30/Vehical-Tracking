@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 
+import pytz
+
 # Create your models here.
 
 
@@ -12,7 +14,7 @@ class devices(models.Model):
     deviceType = models.CharField(max_length = 255, blank=True , null = True    )
     chassisNumber = models.CharField(max_length = 255, blank=True , null    = True )
     trackingCode = models.CharField(max_length = 255, blank=True , null = True ) 
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now=True)
 
 
 class deviceStatus(models.Model):
@@ -20,7 +22,7 @@ class deviceStatus(models.Model):
     transactionId = models.CharField(max_length=100 , null = False , blank = False)
     active = models.BooleanField(default=False)
     status = models.CharField(max_length= 100 , blank=True , null = True )
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now=True)
 
 class deviceLocation(models.Model):
     device = models.ForeignKey(devices , related_name="deviceLocation" , on_delete=models.CASCADE , null = True )
@@ -35,7 +37,7 @@ class deviceLocation(models.Model):
     address = models.CharField(max_length= 1000 )
     odometer = models.BigIntegerField()
     gpsSignal = models.IntegerField()
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now= True)
 
 class canInfo( models.Model):
     device = models.ForeignKey(devices , related_name = "canInfo_devices" , on_delete = models.CASCADE , null = True)
@@ -58,7 +60,7 @@ class canInfo( models.Model):
     AFaultRank= models.BigIntegerField(null = True )
     BSOCValue= models.BigIntegerField(null = True )
     distanceToEmpty = models.BigIntegerField(null = True )
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now= True)
 
 class alerts(models.Model):
     device = models.ForeignKey(devices , related_name= "device_alerts" , on_delete = models.CASCADE , null = True)
@@ -70,7 +72,7 @@ class alerts(models.Model):
     alarmType = models.IntegerField(null = True)
     limit = models.IntegerField(null = True)
     severity = models.IntegerField(null = True)
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now=True)
 
 
 class todaysDrive(models.Model):
@@ -80,13 +82,13 @@ class todaysDrive(models.Model):
     todayMovementTime =  models.IntegerField(null = True)
     todayIdleTime =  models.IntegerField(null = True)
     todayDriveCount =  models.IntegerField(null = True)
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(auto_now=True)
 
 class links(models.Model):
     device = models.ForeignKey(devices , related_name = "device_links" , on_delete = models.CASCADE)
     transactionId = models.CharField(max_length=100 , null = False , blank = False)
     embedUrl = models.CharField(max_length=500)
-    created_at = models.DateTimeField(default=datetime.datetime.now() )
+    created_at = models.DateTimeField(auto_now=True)
 
 class dinputs(models.Model):
     device = models.ForeignKey(devices , related_name = "device_dinputs" , on_delete = models.CASCADE , null = True) 
@@ -98,13 +100,14 @@ class dinputs(models.Model):
     input_5 = models.IntegerField(null = True)
     input_6 = models.IntegerField(null = True)
     input_7 = models.IntegerField(null = True)
-    created_at = models.DateTimeField(default=datetime.datetime.now())
-
-
-
-
-
     
+    created_at = models.DateTimeField(auto_now=True)
+
+
+
+
+
+
 
 
 

@@ -18,7 +18,7 @@ class DeviceLocationSerializer(serializers.ModelSerializer):
         # fields = "__all__"
         # exclude = ["transactionId" , "id" , ]
         fields = ["gpsTime" , "gprsTime" , "latitude" , "longitude" , "altitude" , "heading" ,  "speedKph" ,"address",
-                   "odometer" , "gpsSignal" ,]
+                   "odometer" , "gpsSignal" , "created_at"]
         
 class CanInfoSerializer(serializers.ModelSerializer):
     class Meta:
