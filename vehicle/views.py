@@ -13,6 +13,8 @@ from rest_framework import status
 from rest_framework import filters
 from rest_framework.views import APIView
 # Create your views here.
+import datetime
+from VehicalTracking import settings
 
 
 class DeviceDetailsView(APIView):
@@ -113,6 +115,7 @@ class ViewDeviceDetails(generics.GenericAPIView):
     Response: A response object containing serialized device details.
     """
     def get(self, request):
+        print(datetime.datetime.now())
         data_list = []
         all_devices = self.get_queryset().prefetch_related('deviceLocation', 'deviceStatus', 'canInfo_devices',
                                                          'device_alerts', 'device_todaysDrive', 'device_links' )
